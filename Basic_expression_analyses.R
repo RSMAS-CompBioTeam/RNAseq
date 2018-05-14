@@ -1,4 +1,3 @@
-setwd('~/RSMASgeneExpression')
 library('DESeq2')
 
 meta<-read.delim('WTsamples_all.txt')
@@ -19,4 +18,4 @@ write.table(rownames(sig),quote=F,row.names=F,col.names=F,file='DEgenes.txt')
 
 normCounts<-counts(cds,norm=T)
 write.csv(normCounts,'normCounts.csv')
-stripchart(normCounts[rownames(sig)[35],]~meta$condition,vertical=T,method='j',pch=1,las=2,cex.axis=0.5)
+#stripchart(normCounts[rownames(sig)[35],]~meta$condition,vertical=T,method='j',pch=1,las=2,cex.axis=0.5)
