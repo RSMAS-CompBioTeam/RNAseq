@@ -1,0 +1,31 @@
+setwd('~/RSMASgeneExpression')
+dat<-read.csv('~/Dropbox/RoseMcBrideShared/olfactometer/kenya_gabon_april2018_olfactometer.csv')#
+dat<-dat[25:nrow(dat),]#
+env<-read.csv('~/Dropbox/RoseMcBrideShared/Colonies/Colonies_5km.csv')#
+dat$Habitat<-env$Habitat[match(dat$Colony,env$Colony)]#
+dat$Location<-env$Location[match(dat$Colony,env$Colony)]#
+dat$Region<-env$Region[match(dat$Colony,env$Colony)]#
+dat$dens<-env$density[match(dat$Colony,env$Colony)]#
+dat<-dat[dat$Host!='Afi',]#
+dat<-na.omit(dat)#
+dat$pref<-2*dat$N_Hu/(dat$N_Hu+dat$N_Alt) - 1#
+dat$resp<-(dat$N_Hu+dat$N_Alt)/dat$N#
+dat$prefcor<-residuals(lm(pref~factor(Day),data=na.omit(dat)))+mean(dat$pref)#
+agg<-aggregate(cbind(N_Hu,N_Alt,N)~Location,mean,data=dat)#
+agg$pref=2*agg$N_Hu/(agg$N_Hu+agg$N_Alt) - 1#
+agg<-agg[order(agg$pref),]#
+dat$Location<-factor(dat$Location,levels=agg[,1])#
+barplot(agg$pref,names.arg=agg$Region,las=2)
+stripchart(dat$prefcor~dat$Colony,las=2,pch=1,xlab='',ylab='Preference index',cex=((dat$N_Hu+dat$N_Alt)/100)**.5,method='jitter',vert=T,cex.axis=0.7,ylim=c(-1.3,1))
+stripchart(dat$prefcor~dat$Location,las=2,pch=1,xlab='',ylab='Preference index',cex=((dat$N_Hu+dat$N_Alt)/100)**.5,method='jitter',vert=T,cex.axis=0.7,ylim=c(-1.3,1))
+stripchart(dat$prefcor~dat$Region,las=2,pch=1,xlab='',ylab='Preference index',cex=((dat$N_Hu+dat$N_Alt)/100)**.5,method='jitter',vert=T,cex.axis=0.7,ylim=c(-1.3,1))
+agg<-aggregate(cbind(N_Hu,N_Alt,N)~Region,mean,data=dat)#
+agg$pref=2*agg$N_Hu/(agg$N_Hu+agg$N_Alt) - 1#
+agg<-agg[order(agg$pref),]#
+dat$Region<-factor(dat$Region,levels=agg[,1])#
+barplot(agg$pref,names.arg=agg$Region,las=2)
+stripchart(dat$prefcor~dat$Region,las=2,pch=1,xlab='',ylab='Preference index',cex=((dat$N_Hu+dat$N_Alt)/100)**.5,method='jitter',vert=T,cex.axis=0.7,ylim=c(-1.3,1))
+barplot(agg$pref,names.arg=agg$Region,las=2)
+barplot(agg$pref,names.arg=agg$Region,las=2,ylim=c(-1,1))
+barplot(agg$pref,names.arg=agg$Region,las=2,ylim=c(-1,1))
+stripchart(dat$prefcor~dat$Region,las=2,pch=1,xlab='',ylab='Preference index',cex=((dat$N_Hu+dat$N_Alt)/100)**.5,method='jitter',vert=T,cex.axis=0.7,ylim=c(-1.3,1))

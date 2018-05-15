@@ -4,10 +4,9 @@
 
 #BSUB -J staralign
 #BSUB -U rsmasw
-#BSUB -o star%J.out
-#BSUB -e star%J.err
 
 module load star
+module load samtools
 
 for i in $@
 do \
@@ -24,4 +23,6 @@ STAR \
 --outFileNamePrefix $BASE
 #lets me know file is done
 echo "STAR alignment of $i complete"
+#index the bam file
+samtools index $BASE.bam
 done
