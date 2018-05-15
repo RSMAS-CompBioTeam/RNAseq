@@ -1,8 +1,8 @@
-#Expression analyses
+# RNA-Seq analyses
 
 This is a basic introduction to using a computer cluster to carry out some analyses of RNA-Seq data.
 
-#Getting set up
+# Getting set up
 
 First we will ssh into pegasus
 
@@ -46,7 +46,7 @@ OK. let's run it
 bsub STARbuild.sh
 ```
 
-#Mapping reads
+# Mapping reads
 
 This script is similar to the index building script, but instead of using STAR to build an index, loops through our samples and maps them to that index (I've omitted the BSUB header).
 The $@ symbol refers to all arguments passed to the script, so we should use a wildcard to direct the script to all of our samples
@@ -88,7 +88,7 @@ let's map our reads!
 bsub STARbuild.sh *.fq.gz
 ```
 
-#Getting gene expression counts
+# Getting gene expression counts
 
 Now we will count the number of reads that mapped to each gene in each sample
 
@@ -109,7 +109,7 @@ Ok, let's run it!
 bsub featureCounts.sh *.bam
 ```
 
-#Retrieving data
+# Retrieving data
 We will now retrieve the expression data for analysis and visualization.
 Open a new terminal without logging onto the cluster.
 ```bash
@@ -119,7 +119,7 @@ scp USERNAME@pegasus.ccs.miami.edu:feature_counts.out .
 scp USERNAME@pegasus.ccs.miami.edu:WTsamples_all.txt .
 ```
 
-#DESeq analysis
+# DESeq analysis
 
 ```R
 #basic_expression_analyses.R
@@ -177,7 +177,7 @@ sig<-res[which(res$padj<0.2&res2$padj<0.2),]
 write.table(rownames(sig),quote=F,row.names=F,col.names=F,file='DEgenes.txt')
 ```
 
-#plotting
+# Plotting
 
 ```R
 
