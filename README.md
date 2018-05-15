@@ -205,7 +205,9 @@ for(gene in genes){
 }
 ```
 
-# we can also extract the interesting genes' protein sequences for further annotation. First we need to install samtools and get the protein sequences
+# Annotation
+
+we can also extract the interesting genes' protein sequences for further annotation. First we need to install samtools and get the protein sequences
 ```bash
 #install local copy of samtools
 wget https://github.com/samtools/samtools/releases/download/1.8/samtools-1.8.tar.bz2
