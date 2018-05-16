@@ -9,8 +9,7 @@
 
 module load star
 
-for i in $@
-do \
+while read i; do
 BASE=$(basename i .fq.gz)
 echo "Aligning $i" 
 STAR \
@@ -20,8 +19,14 @@ STAR \
 --genomeDir STARindex \
 --sjdbGTFtagExonParentTranscript Parent \
 --sjdbGTFfile pdam_1415_maker.gtf \
---outSAMtype BAM SortedByCoordinate \
---outFileNamePrefix $BASE
+--outFileNamePrefix "$BASE"_unsorted
 #lets me know file is done
 echo "STAR alignment of $i complete"
-done
+#index the bam file
+samtools view -b "$BASE"_unsorted.sam > "$BASE"_unsorted.bam
+samtools sort "$BASE"_unsorted.bam > "$BASE".bam
+samtools index "$BASE".bam
+rm "$BASE"_unsorted.sam
+rm "$BASE"_unsorted.bam
+done < samples.txt
+

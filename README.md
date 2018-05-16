@@ -49,7 +49,6 @@ bsub ./STARbuild.sh
 # Mapping reads
 
 This script is similar to the index building script, but instead of using STAR to build an index, loops through our samples and maps them to that index (I've omitted the BSUB header).
-The $@ symbol refers to all arguments passed to the script, so we should use a wildcard to direct the script to all of our samples
 This will map each sample (each sample is a compressed file of raw reads i.e. a fq.gz file) to the genome to yield aligned read files (.bam files).
 ```bash
 #!/bin/bash
@@ -62,8 +61,7 @@ This will map each sample (each sample is a compressed file of raw reads i.e. a 
 module load star
 module load samtools
 
-for i in $@
-do \
+while read i; do
 BASE=$(basename i .fq.gz)
 echo "Aligning $i" 
 STAR \
@@ -79,13 +77,15 @@ STAR \
 echo "STAR alignment of $i complete"
 #index the bam file
 samtools index $BASE.bam
-done
+done < samples.txt
 
 ```
 
 let's map our reads!
 ```bash
-bsub ./STARalign.sh *.fq.gz
+#make a list of samples
+ls -1 *.fq.gz > samples.txt
+bsub ./STARalign.sh
 ```
 
 # Getting gene expression counts
