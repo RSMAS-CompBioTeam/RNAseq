@@ -12,7 +12,7 @@ module load star
 mkdir STARindex
 
 STAR \
---runMode genomeBuild \
+--runMode genomeGenerate \
 --genomeDir STARindex \
 --genomeFastaFiles pdam_genome_1415.fasta \
---sjdbGTFfile pdam_1415_maker.gtf \
+--sjdbGTFfile pdam_1415_maker.gtf
