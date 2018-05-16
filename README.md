@@ -150,11 +150,10 @@ copy this into a new R script called basic_expression_analyses.R in Rstudio
 ###INPUT: metadata "WTsamples_all.txt" and gene expression counts "feature_counts.out"
 ###OUTPUT: normalized expression matrix "normCounts.csv", list of interesting genes "DEgenes.txt"
 
-setwd('~/workshopAnalyses')
 library('DESeq2')
 
 #read in the metadata
-meta<-read.delim('data/WTsamples_all.txt')
+meta<-read.delim('WTsamples_all.txt')
 
 #make sure treatments are factors and not continuous variables for DESeq analysis
 meta$colony<-factor(meta$colony)
@@ -211,8 +210,6 @@ copy this into a new R script called plot_genes.R in Rstudio
 
 ###INPUT: metadata "WTsamples_all.txt", normalized expression matrix "normCounts.csv", and list of interesting genes "DEgenes.txt"
 ###OUTPUT: plots of expression across treatments for each interesting gene
-
-setwd('~/workshopAnalyses')
 
 #read in metadata
 meta<-read.delim('WTsamples_all.txt')
