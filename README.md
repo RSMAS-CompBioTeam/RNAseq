@@ -43,7 +43,7 @@ STAR \
 
 OK. let's run it
 ```bash
-bsub STARbuild.sh
+bsub ./STARbuild.sh
 ```
 
 # Mapping reads
@@ -85,7 +85,7 @@ done
 
 let's map our reads!
 ```bash
-bsub STARbuild.sh *.fq.gz
+bsub ./STARbuild.sh *.fq.gz
 ```
 
 # Getting gene expression counts
@@ -106,7 +106,7 @@ featureCounts -a pdam_1415_maker.gtf -o feature_counts.out -t exon -g gene_id $@
 
 Ok, let's run it!
 ```bash
-bsub featureCounts.sh *.bam
+bsub ./featureCounts.sh *.bam
 ```
 
 # Retrieving data
