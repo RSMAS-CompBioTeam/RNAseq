@@ -59,10 +59,9 @@ This will map each sample (each sample is a compressed file of raw reads i.e. a 
 #BSUB -U rsmasw
 
 module load star
-module load samtools
 
 while read i; do
-BASE=$(basename i .fq.gz)
+BASE=$(basename $i .fq.gz)
 echo "Aligning $i" 
 STAR \
 --runMode alignReads \
@@ -71,13 +70,17 @@ STAR \
 --genomeDir STARindex \
 --sjdbGTFtagExonParentTranscript Parent \
 --sjdbGTFfile pdam_1415_maker.gtf \
---outSAMtype BAM SortedByCoordinate \
---outFileNamePrefix $BASE
+--outFileNamePrefix "$BASE"_unsorted
 #lets me know file is done
 echo "STAR alignment of $i complete"
 #index the bam file
-samtools index $BASE.bam
+samtools view -b "$BASE"Aligned.out.sam > "$BASE"_unsorted.bam
+samtools sort "$BASE"_unsorted.bam > "$BASE".bam
+samtools index "$BASE".bam
+rm "$BASE"Aligned.out.sam.sam
+rm "$BASE"_unsorted.bam
 done < samples.txt
+
 
 ```
 
@@ -85,6 +88,7 @@ let's map our reads!
 ```bash
 #make a list of samples
 ls -1 *.fq.gz > samples.txt
+#submit job
 bsub ./STARalign.sh
 ```
 
@@ -101,12 +105,13 @@ Let's look at the script
 
 module load subread
 
-featureCounts -a pdam_1415_maker.gtf -o feature_counts.out -t exon -g gene_id $@
+featureCounts -a pdam_1415_maker.gtf -o feature_counts.out -t exon -g gene_id bamlist.txt
 ```
 
 Ok, let's run it!
 ```bash
-bsub ./featureCounts.sh *.bam
+ls -1 *.bam > bamlist.txt
+bsub ./featureCounts.sh
 ```
 
 # Retrieving data
