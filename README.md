@@ -118,13 +118,28 @@ bsub ./featureCounts.sh
 
 # Retrieving data
 We will now retrieve the expression data for analysis and visualization.
-Open a new terminal without logging onto the cluster.
+Open a new terminal without logging onto the cluster. We will copy the gene expression counts data (feature_counts.out) and the sample metadata (WTsamples_all.txt) into the CompBio-RNAseq Github repository we created earlier.
+
 ```bash
-mkdir workshopAnalyses
-cd workshopAnalyses
-scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out .
-scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt .
+# Navigate to the CompBio-RNAseq repository
+cd ~/github/CompBio-RNAseq
+
+# Create a new subdirectory to put the data files in
+mkdir data
+
+# Transfer the files from Pegasus into the data subdirectory
+scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out data/
+scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt data/
 ```
+
+# Open RStudio
+The differential expression analysis will take place using R, so open RStudio. We will create a new Rproject associated with our git repository, which will help us stay organized and interact with Github.com from inside RStudio.
+
+Go to File > New Project
+Click Existing Directory
+Choose your CompBio-RNAseq folder
+
+Now we will see how to add, commit, and push within the RStudio environment...
 
 # DESeq analysis
 
@@ -139,7 +154,7 @@ setwd('~/workshopAnalyses')
 library('DESeq2')
 
 #read in the metadata
-meta<-read.delim('WTsamples_all.txt')
+meta<-read.delim('data/WTsamples_all.txt')
 
 #make sure treatments are factors and not continuous variables for DESeq analysis
 meta$colony<-factor(meta$colony)
