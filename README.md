@@ -223,9 +223,8 @@ for(gene in genes){
 # Annotation
 
 we can also extract the interesting genes' protein sequences for further annotation.
-
+first we transfer our list of genes to the cluster
 ```bash
-#get protein sequences
 scp DEgenes.txt USERNAME@pegasus.ccs.miami.edu:~/ 
 ```
 
