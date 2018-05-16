@@ -1,7 +1,9 @@
 #!/bin/bash
 
-#BSUB -J featurecounts
+#BSUB -J staralign
 #BSUB -U rsmasw
+#BSUB -o star%J.out
+#BSUB -e star%J.err
 
 module load subread
 

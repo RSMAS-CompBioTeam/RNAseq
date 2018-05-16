@@ -13,7 +13,7 @@ ssh USERNAME@pegasus.ccs.miami.edu
 Next, we will download the files we need to carry out this exercise from Dropbox
 
 ```bash
-wget https://www.dropbox.com/sh/enrzbdvvu3kluqe/AAAZJbGkPFob2tzsuFsDcToya?dl=1 -O taiwan_fq.zip
+wget --no-check-certificate https://www.dropbox.com/sh/enrzbdvvu3kluqe/AAAZJbGkPFob2tzsuFsDcToya?dl=1 -O taiwan_fq.zip
 unzip taiwan_fq.zip
 ```
 
