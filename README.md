@@ -224,7 +224,7 @@ genes<-read.delim('DEgenes.txt',header=F)[,1]
 for(gene in genes){
 	pdf(file=paste(gene,".pdf"))
 	par(mar=c(8,4,2,1))
-	stripchart(normCounts[gene,]~meta$condition,vertical=T,pch=1,method='j',las=2,ylab='Normalized counts',main=curr)
+	stripchart(normCounts[gene,]~meta$condition,vertical=T,pch=1,method='j',las=2,ylab='Normalized counts',main=gene)
 	dev.off()
 }
 ```
