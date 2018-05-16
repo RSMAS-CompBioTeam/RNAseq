@@ -4,6 +4,7 @@
 
 #BSUB -J starbuild
 #BSUB -U rsmasw
+#BSUB -P ccsfellows
 
 module load star
 

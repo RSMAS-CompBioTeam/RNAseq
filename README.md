@@ -29,6 +29,7 @@ It looks like this:
 
 #BSUB -J starbuild
 #BSUB -U rsmasw
+#BSUB -P ccsfellows
 
 module load star
 
@@ -57,6 +58,7 @@ This will map each sample (each sample is a compressed file of raw reads i.e. a 
 
 #BSUB -J staralign
 #BSUB -U rsmasw
+#BSUB -P ccsfellows
 
 module load star
 
@@ -102,6 +104,7 @@ Let's look at the script
 
 #BSUB -J featurecounts
 #BSUB -U rsmasw
+#BSUB -P ccsfellows
 
 module load subread
 
