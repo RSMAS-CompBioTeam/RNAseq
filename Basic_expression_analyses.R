@@ -1,6 +1,8 @@
 ###INPUT: metadata "WTsamples_all.txt" and gene expression counts "feature_counts.out"
 ###OUTPUT: normalized expression matrix "normCounts.csv", list of interesting genes "DEgenes.txt"
 
+setwd('~/workshopAnalyses')
+
 library('DESeq2')
 
 #read in the metadata
