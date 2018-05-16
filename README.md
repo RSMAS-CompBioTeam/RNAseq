@@ -265,7 +265,7 @@ wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/c
 gunzip uniprot_sprot.fasta.gz
 
 # Make a BLAST database out of the SwissProt fasta file
-makeblastdb-in uniprot_sprot.fasta-dbtypeprot
+makeblastdb -in uniprot_sprot.fasta -dbtype prot
 ```
 
 Now we have a BLAST database ready to compare our query sequences to. We will use the command `blastp` since we are comparing protein sequences against a protein database.
