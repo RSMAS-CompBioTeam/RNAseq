@@ -4,13 +4,11 @@
 
 #BSUB -J staralign
 #BSUB -U rsmasw
-#BSUB -o star%J.out
-#BSUB -e star%J.err
 
 module load star
 
 while read i; do
-BASE=$(basename i .fq.gz)
+BASE=$(basename $i .fq.gz)
 echo "Aligning $i" 
 STAR \
 --runMode alignReads \
@@ -19,14 +17,13 @@ STAR \
 --genomeDir STARindex \
 --sjdbGTFtagExonParentTranscript Parent \
 --sjdbGTFfile pdam_1415_maker.gtf \
---outFileNamePrefix "$BASE"_unsorted
+--outFileNamePrefix "$BASE"
 #lets me know file is done
 echo "STAR alignment of $i complete"
 #index the bam file
-samtools view -b "$BASE"_unsorted.sam > "$BASE"_unsorted.bam
+samtools view -b "$BASE"Aligned.out.sam > "$BASE"_unsorted.bam
 samtools sort "$BASE"_unsorted.bam > "$BASE".bam
 samtools index "$BASE".bam
-rm "$BASE"_unsorted.sam
+rm "$BASE"Aligned.out.sam.sam
 rm "$BASE"_unsorted.bam
 done < samples.txt
-
