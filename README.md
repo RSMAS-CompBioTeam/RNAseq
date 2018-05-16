@@ -124,12 +124,9 @@ Open a new terminal without logging onto the cluster. We will copy the gene expr
 # Navigate to the CompBio-RNAseq repository
 cd ~/github/CompBio-RNAseq
 
-# Create a new subdirectory to put the data files in
-mkdir data
-
 # Transfer the files from Pegasus into the data subdirectory
-scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out data/
-scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt data/
+scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out .
+scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt .
 ```
 
 # Open RStudio
