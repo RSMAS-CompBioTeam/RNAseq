@@ -24,6 +24,6 @@ echo "STAR alignment of $i complete"
 samtools view -b "$BASE"Aligned.out.sam > "$BASE"_unsorted.bam
 samtools sort "$BASE"_unsorted.bam > "$BASE".bam
 samtools index "$BASE".bam
-rm "$BASE"Aligned.out.sam.sam
+rm "$BASE"Aligned.out.sam
 rm "$BASE"_unsorted.bam
 done < samples.txt

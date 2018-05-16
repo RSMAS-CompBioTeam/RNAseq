@@ -70,14 +70,14 @@ STAR \
 --genomeDir STARindex \
 --sjdbGTFtagExonParentTranscript Parent \
 --sjdbGTFfile pdam_1415_maker.gtf \
---outFileNamePrefix "$BASE"_unsorted
+--outFileNamePrefix "$BASE"
 #lets me know file is done
 echo "STAR alignment of $i complete"
 #index the bam file
 samtools view -b "$BASE"Aligned.out.sam > "$BASE"_unsorted.bam
 samtools sort "$BASE"_unsorted.bam > "$BASE".bam
 samtools index "$BASE".bam
-rm "$BASE"Aligned.out.sam.sam
+rm "$BASE"Aligned.out.sam
 rm "$BASE"_unsorted.bam
 done < samples.txt
 
