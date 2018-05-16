@@ -120,8 +120,8 @@ Open a new terminal without logging onto the cluster.
 ```bash
 mkdir workshopAnalyses
 cd workshopAnalyses
-scp USERNAME@pegasus.ccs.miami.edu:feature_counts.out .
-scp USERNAME@pegasus.ccs.miami.edu:WTsamples_all.txt .
+scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out .
+scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt .
 ```
 
 # DESeq analysis
@@ -227,7 +227,7 @@ make
 cd ..
 
 #get protein sequences
-scp USERNAME@pegasus.ccs.miami.edu:pdam_1415_maker.faa .
+scp USERNAME@pegasus.ccs.miami.edu:~/pdam_1415_maker.faa .
 bash 
 ```
 
