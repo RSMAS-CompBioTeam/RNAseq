@@ -224,9 +224,9 @@ for(gene in genes){
 
 we can also extract the interesting genes' protein sequences for further annotation.
 
+```bash
 #get protein sequences
-scp DEgenes.txt USERNAME@pegasus.ccs.miami.edu:~/
-bash 
+scp DEgenes.txt USERNAME@pegasus.ccs.miami.edu:~/ 
 ```
 
 Then we can run the following script to extract the interesting genes' protein sequences.
