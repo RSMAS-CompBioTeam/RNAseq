@@ -132,9 +132,9 @@ scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt .
 # Open RStudio
 The differential expression analysis will take place using R, so open RStudio. We will create a new Rproject associated with our git repository, which will help us stay organized and interact with Github.com from inside RStudio.
 
-Go to File > New Project
-Click Existing Directory
-Choose your CompBio-RNAseq folder
+Go to File > New Project  
+Click Existing Directory  
+Choose your CompBio-RNAseq folder  
 
 Now we will see how to add, commit, and push within the RStudio environment...
 
