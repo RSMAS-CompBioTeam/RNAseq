@@ -126,6 +126,8 @@ scp USERNAME@pegasus.ccs.miami.edu:WTsamples_all.txt .
 
 # DESeq analysis
 
+copy this into a new R script called basic_expression_analyses.R in Rstudio
+
 ```R
 #basic_expression_analyses.R
 ###INPUT: metadata "WTsamples_all.txt" and gene expression counts "feature_counts.out"
@@ -184,6 +186,9 @@ write.table(rownames(sig),quote=F,row.names=F,col.names=F,file='DEgenes.txt')
 
 # Plotting
 
+copy this into a new R script called plot_genes.R in Rstudio
+
+
 ```R
 
 ###INPUT: metadata "WTsamples_all.txt", normalized expression matrix "normCounts.csv", and list of interesting genes "DEgenes.txt"
@@ -226,7 +231,8 @@ scp USERNAME@pegasus.ccs.miami.edu:pdam_1415_maker.faa .
 bash 
 ```
 
-Then we can run the following script to extract the interesting genes' protein sequences
+Then we can run the following script to extract the interesting genes' protein sequences.
+Use a text editor to save the following in a file called get_DEgene_proteins.sh
 ```bash
 #!/bin/bash
 #USAGE: bash get_DEgene_proteins.sh DEgenes.txt proteins.faa output.faa
@@ -236,7 +242,7 @@ xargs samtools-1.8/samtools faidx $2 < $1 > $3
 
 Let's run it (locally this time, so no bsub)!
 ```bash
-bash get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
+bash ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
 ```
 
 
