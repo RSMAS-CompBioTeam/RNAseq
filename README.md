@@ -270,11 +270,25 @@ bsub -J blast -P ccsfellows \
 blastp -query DEgenes.faa \
 -db ~/swissprot/uniprot_sprot.fasta \
 -out sprot_blastout.txt \
--evalue 1e-10 \
--outfmt 6
+-evalue 1e-10
 ```
 
-Now we can inspect the blast results (sprot_blastout.txt) to see what proteins our differentially expressed genes are similar to. Search the UniProt website using the UniProt ID's of the top blast hits to get more information about these proteins.
+Now we can inspect the blast results (`less sprot_blastout.txt`) to see what proteins our differentially expressed genes are similar to. The default blastp output format shows all of the hits and the alignments between the query and subject sequences. If we want a more condensed output, there are many different formats we can choose from (see `blastp -help`). Let's try `-outfmt 6` to get a tabular output and add the argument `-num_alignments 1` to give us just the top hit fot each query.
+
+```bash
+# Run blastp with options
+bsub -J blast -P ccsfellows \
+blastp -query DEgenes.faa \
+-db ~/swissprot/uniprot_sprot.fasta \
+-out sprot_blastout_tabular.txt \
+-evalue 1e-10 \
+-outfmt 6 \
+-num_alignments 1
+```
+
+Now we can inspect this tabular output (`less sprot_blastout_tabular.txt`). This format is well-suited to import into R for downstream analysis.
+
+Search the UniProt website using the UniProt ID's of the top blast hits (e.g., D9IQ16) to get more information about these proteins.
 
 # WGCNA
 if you have a really large number of genes (which you often do in an RNA seq dataset) you might cluster their expression profiles
