@@ -222,22 +222,14 @@ for(gene in genes){
 
 # Annotation
 
-we can also extract the interesting genes' protein sequences for further annotation. First we need to install samtools and get the protein sequences
-```bash
-#install local copy of samtools
-wget https://github.com/samtools/samtools/releases/download/1.8/samtools-1.8.tar.bz2
-tar -xvjf samtools-1.8.tar.bz2
-cd samtools-1.8
-make
-cd ..
+we can also extract the interesting genes' protein sequences for further annotation.
 
 #get protein sequences
-scp USERNAME@pegasus.ccs.miami.edu:~/pdam_1415_maker.faa .
+scp DEgenes.txt USERNAME@pegasus.ccs.miami.edu:~/
 bash 
 ```
 
 Then we can run the following script to extract the interesting genes' protein sequences.
-Use a text editor to save the following in a file called get_DEgene_proteins.sh
 ```bash
 #!/bin/bash
 #USAGE: bash get_DEgene_proteins.sh DEgenes.txt proteins.faa output.faa
@@ -245,9 +237,9 @@ Use a text editor to save the following in a file called get_DEgene_proteins.sh
 xargs samtools-1.8/samtools faidx $2 < $1 > $3
 ```
 
-Let's run it (locally this time, so no bsub)!
+Let's run it!
 ```bash
-bash ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
+bsub ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
 ```
 
 
