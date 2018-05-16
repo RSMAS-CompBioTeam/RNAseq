@@ -237,17 +237,11 @@ first we transfer our list of genes to the cluster
 scp DEgenes.txt USERNAME@pegasus.ccs.miami.edu:~/ 
 ```
 
-Then we can run the following script to extract the interesting genes' protein sequences.
+Then we can run the following command to extract the interesting genes' protein sequences.
 ```bash
-#!/bin/bash
-#USAGE: bash get_DEgene_proteins.sh DEgenes.txt proteins.faa output.faa
+module load samtools
 
-xargs samtools-1.8/samtools faidx $2 < $1 > $3
-```
-
-Let's run it!
-```bash
-bsub ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
+xargs samtools faidx pdam_1415_maker.faa < DEgenes.txt > DEgenes.faa
 ```
 
 Now that we have the sequences of our differentially expressed genes, we can compare them to known sequences in a database to get information about these genes. 
