@@ -85,7 +85,7 @@ done
 
 let's map our reads!
 ```bash
-bsub ./STARbuild.sh *.fq.gz
+bsub ./STARalign.sh *.fq.gz
 ```
 
 # Getting gene expression counts
