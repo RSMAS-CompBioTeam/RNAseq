@@ -258,6 +258,12 @@ bsub ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
 if you have a really large number of genes (which you often do in an RNA seq dataset) you might cluster their expression profiles
 this can make analysis and interpretation easier
 
+```bash
+scp USERNAME@pegasus.ccs.miami.edu:~/meta_WGCNA.csv data/
+scp USERNAME@pegasus.ccs.miami.edu:~/norm_counts_WGCNA.csv data/
+```
+
+
 ```R
 library(WGCNA)
 
