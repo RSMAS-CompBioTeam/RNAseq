@@ -253,6 +253,37 @@ Let's run it!
 bsub ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
 ```
 
+Now that we have the sequences of our differentially expressed genes, we can compare them to known sequences in a database to get information about these genes. 
+Let's download the UniProt SwissProt database and BLAST our query sequences against it.
+
+```bash
+# Make a new directory in your nethome for the SwissProt database
+mkdir ~/swissprot && cd ~/swissprot
+
+# Download and unzip the SwissProt database
+wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+gunzip uniprot_sprot.fasta.gz
+
+# Make a BLAST database out of the SwissProt fasta file
+makeblastdb-in uniprot_sprot.fasta-dbtypeprot
+```
+
+Now we have a BLAST database ready to compare our query sequences to. We will use the command `blastp` since we are comparing protein sequences against a protein database.
+
+```bash
+# Change back to home directory (where the DEgenes.faa file should be)
+cd ~
+
+# Run blastp with options
+bsub -J blast -P ccsfellows \
+blastp -query DEgenes.faa \
+-db ~/swissprot/uniprot_sprot.fasta \
+-out sprot_blastout.txt \
+-evalue 1e-10 \
+-outfmt 6
+```
+
+Now we can inspect the blast results (sprot_blastout.txt) to see what proteins our differentially expressed genes are similar to. Search the UniProt website using the UniProt ID's of the top blast hits to get more information about these proteins.
 
 # WGCNA
 if you have a really large number of genes (which you often do in an RNA seq dataset) you might cluster their expression profiles
