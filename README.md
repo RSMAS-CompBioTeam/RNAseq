@@ -45,7 +45,7 @@ STAR \
 
 OK. let's run it
 ```bash
-bsub ./STARbuild.sh
+bsub < STARbuild.sh
 ```
 
 # Mapping reads
