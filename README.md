@@ -261,6 +261,7 @@ wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/c
 gunzip uniprot_sprot.fasta.gz
 
 # Make a BLAST database out of the SwissProt fasta file
+module load blast
 makeblastdb -in uniprot_sprot.fasta -dbtype prot
 ```
 
