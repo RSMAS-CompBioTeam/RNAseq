@@ -58,7 +58,6 @@ This will map each sample (each sample is a compressed file of raw reads i.e. a 
 #purpose: align trimmed RNAseq reads using STAR on the Pegasus bigmem queue
 
 #BSUB -J staralign
-#BSUB -U rsmasw
 #BSUB -P ccsfellows
 #BSUB -o %J.out
 
@@ -105,7 +104,6 @@ Let's look at the script
 #!/bin/bash
 
 #BSUB -J staralign
-#BSUB -U rsmasw
 #BSUB -P ccsfellows
 #BSUB -o %J.out
 
