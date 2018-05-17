@@ -29,7 +29,6 @@ It looks like this:
 #purpose: build genome indices for use with the STAR aligner
 
 #BSUB -J starbuild
-#BSUB -U rsmasw
 #BSUB -P ccsfellows
 #BSUB -o %J.out
 
