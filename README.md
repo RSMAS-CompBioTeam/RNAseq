@@ -8,6 +8,7 @@ First we will ssh into pegasus
 
 ```bash
 ssh USERNAME@pegasus.ccs.miami.edu
+bsub -Is -P ccsfellows bash
 ```
 
 Next, we will download the files we need to carry out this exercise from Dropbox
