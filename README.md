@@ -128,20 +128,17 @@ Open a new terminal without logging onto the cluster. We will copy the gene expr
 # Navigate to the CompBio-RNAseq repository
 cd ~/github/CompBio-RNAseq
 
-# Create a new subdirectory to put the data files in
-mkdir data
-
 # Transfer the files from Pegasus into the data subdirectory
-scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out data/
-scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt data/
+scp USERNAME@pegasus.ccs.miami.edu:~/feature_counts.out .
+scp USERNAME@pegasus.ccs.miami.edu:~/WTsamples_all.txt .
 ```
 
 # Open RStudio
 The differential expression analysis will take place using R, so open RStudio. We will create a new Rproject associated with our git repository, which will help us stay organized and interact with Github.com from inside RStudio.
 
-Go to File > New Project
-Click Existing Directory
-Choose your CompBio-RNAseq folder
+Go to File > New Project  
+Click Existing Directory  
+Choose your CompBio-RNAseq folder  
 
 Now we will see how to add, commit, and push within the RStudio environment...
 
@@ -231,7 +228,7 @@ genes<-read.delim('DEgenes.txt',header=F)[,1]
 for(gene in genes){
 	pdf(file=paste(gene,".pdf"))
 	par(mar=c(8,4,2,1))
-	stripchart(normCounts[gene,]~meta$condition,vertical=T,pch=1,method='j',las=2,ylab='Normalized counts',main=curr)
+	stripchart(normCounts[gene,]~meta$condition,vertical=T,pch=1,method='j',las=2,ylab='Normalized counts',main=gene)
 	dev.off()
 }
 ```
@@ -244,19 +241,58 @@ first we transfer our list of genes to the cluster
 scp DEgenes.txt USERNAME@pegasus.ccs.miami.edu:~/ 
 ```
 
-Then we can run the following script to extract the interesting genes' protein sequences.
+Then we can run the following command to extract the interesting genes' protein sequences.
 ```bash
-#!/bin/bash
-#USAGE: bash get_DEgene_proteins.sh DEgenes.txt proteins.faa output.faa
+module load samtools
 
-xargs samtools-1.8/samtools faidx $2 < $1 > $3
+xargs samtools faidx pdam_1415_maker.faa < DEgenes.txt > DEgenes.faa
 ```
 
-Let's run it!
+Now that we have the sequences of our differentially expressed genes, we can compare them to known sequences in a database to get information about these genes. 
+Let's download the UniProt SwissProt database and BLAST our query sequences against it.
+
 ```bash
-bsub ./get_DEgene_proteins.sh DEgenes.txt pdam_1415_maker.faa DEgenes.faa
+# Make a new directory in your nethome for the SwissProt database
+mkdir ~/swissprot && cd ~/swissprot
+
+# Download and unzip the SwissProt database
+wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+gunzip uniprot_sprot.fasta.gz
+
+# Make a BLAST database out of the SwissProt fasta file
+makeblastdb -in uniprot_sprot.fasta -dbtype prot
 ```
 
+Now we have a BLAST database ready to compare our query sequences to. We will use the command `blastp` since we are comparing protein sequences against a protein database.
+
+```bash
+# Change back to home directory (where the DEgenes.faa file should be)
+cd ~
+
+# Run blastp with options
+bsub -J blast -P ccsfellows \
+blastp -query DEgenes.faa \
+-db ~/swissprot/uniprot_sprot.fasta \
+-out sprot_blastout.txt \
+-evalue 1e-10
+```
+
+Now we can inspect the blast results (`less sprot_blastout.txt`) to see what proteins our differentially expressed genes are similar to. The default blastp output format shows all of the hits and the alignments between the query and subject sequences. If we want a more condensed output, there are many different formats we can choose from (see `blastp -help`). Let's try `-outfmt 6` to get a tabular output and add the argument `-num_alignments 1` to give us just the top hit fot each query.
+
+```bash
+# Run blastp with options
+bsub -J blast -P ccsfellows \
+blastp -query DEgenes.faa \
+-db ~/swissprot/uniprot_sprot.fasta \
+-out sprot_blastout_tabular.txt \
+-evalue 1e-10 \
+-outfmt 6 \
+-num_alignments 1
+```
+
+Now we can inspect this tabular output (`less sprot_blastout_tabular.txt`). This format is well-suited to import into R for downstream analysis.
+
+Search the UniProt website using the UniProt ID's of the top blast hits (e.g., D9IQ16) to get more information about these proteins.
 
 # WGCNA
 if you have a really large number of genes (which you often do in an RNA seq dataset) you might cluster their expression profiles
