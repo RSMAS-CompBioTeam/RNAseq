@@ -30,16 +30,17 @@ It looks like this:
 #BSUB -J starbuild
 #BSUB -U rsmasw
 #BSUB -P ccsfellows
+#BSUB -o %J.out
 
 module load star
 
 mkdir STARindex
 
 STAR \
---runMode genomeBuild \
+--runMode genomeGenerate \
 --genomeDir STARindex \
 --genomeFastaFiles pdam_genome_1415.fasta \
---sjdbGTFfile pdam_1415_maker.gtf \
+--sjdbGTFfile pdam_1415_maker.gtf
 ```
 
 OK. let's run it
@@ -59,6 +60,7 @@ This will map each sample (each sample is a compressed file of raw reads i.e. a 
 #BSUB -J staralign
 #BSUB -U rsmasw
 #BSUB -P ccsfellows
+#BSUB -o %J.out
 
 module load star
 
@@ -102,9 +104,11 @@ Let's look at the script
 ```bash
 #!/bin/bash
 
-#BSUB -J featurecounts
+#BSUB -J staralign
 #BSUB -U rsmasw
 #BSUB -P ccsfellows
+#BSUB -o %J.out
+
 
 module load subread
 
