@@ -92,7 +92,7 @@ let's map our reads!
 #make a list of samples
 ls -1 *.fq.gz > samples.txt
 #submit job
-bsub ./STARalign.sh
+bsub < STARalign.sh
 ```
 
 # Getting gene expression counts
@@ -115,7 +115,7 @@ featureCounts -a pdam_1415_maker.gtf -o feature_counts.out -t exon -g gene_id Wt
 
 Ok, let's run it!
 ```bash
-bsub ./featureCounts.sh
+bsub < featureCounts.sh
 ```
 
 # Retrieving data
